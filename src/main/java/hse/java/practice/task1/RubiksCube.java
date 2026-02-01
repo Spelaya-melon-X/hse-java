@@ -127,65 +127,55 @@ public class RubiksCube implements  Cube {
 
     @Override
     public void left(RotateDirection direction) {
+        CubeColor[] upCol = Arrays.copyOf(edges[EdgePosition.UP.getEdgeNumber()].getPartsRow(0), 3);
+        CubeColor[] frontCol = Arrays.copyOf(edges[EdgePosition.FRONT.getEdgeNumber()].getPartsRow(0), 3);
+        CubeColor[] downCol = Arrays.copyOf(edges[EdgePosition.DOWN.getEdgeNumber()].getPartsRow(0), 3);
+        CubeColor[] backColRaw = edges[EdgePosition.BACK.getEdgeNumber()].getPartsRow(2); // Столбец 2 BACK
+        CubeColor[] backCol = reverse(Arrays.copyOf(backColRaw, 3));
 
-        CubeColor[] upColorEdge = Arrays.copyOf(edges[EdgePosition.UP.getEdgeNumber()].getPartsRow(0),edges[EdgePosition.UP.getEdgeNumber()].getPartsRow(0).length );   // red
-        CubeColor[] downColorEdge = Arrays.copyOf(edges[EdgePosition.DOWN.getEdgeNumber()].getPartsRow(0),edges[EdgePosition.DOWN.getEdgeNumber()].getPartsRow(0).length );   // red
-        CubeColor[] frontColorEdge = Arrays.copyOf(edges[EdgePosition.FRONT.getEdgeNumber()].getPartsRow(0),edges[EdgePosition.FRONT.getEdgeNumber()].getPartsRow(0).length );   // red
-        CubeColor[] backColorEdge = Arrays.copyOf(edges[EdgePosition.BACK.getEdgeNumber()].getPartsRow(0),edges[EdgePosition.BACK.getEdgeNumber()].getPartsRow(0).length );   // red
-
-
-
-        switch (direction) { // TODO : можно вынести
-            case COUNTERCLOCKWISE  :
-                edges[ EdgePosition.UP.getEdgeNumber() ].setPartsRow(frontColorEdge, 0);
-                edges[ EdgePosition.BACK.getEdgeNumber() ].setPartsRow(upColorEdge, 0);
-                edges[ EdgePosition.DOWN.getEdgeNumber() ].setPartsRow(backColorEdge, 0);
-                edges[ EdgePosition.FRONT.getEdgeNumber() ].setPartsRow(downColorEdge, 0);
-                break ;
-
+        switch (direction) {
             case CLOCKWISE:
-                edges[ EdgePosition.UP.getEdgeNumber() ].setPartsRow(backColorEdge, 0);
-                edges[ EdgePosition.BACK.getEdgeNumber() ].setPartsRow(downColorEdge, 0);
-                edges[ EdgePosition.DOWN.getEdgeNumber() ].setPartsRow(frontColorEdge, 0);
-                edges[ EdgePosition.FRONT.getEdgeNumber() ].setPartsRow(upColorEdge, 0);
-                break ;
-
+                edges[EdgePosition.FRONT.getEdgeNumber()].setPartsRow(upCol, 0);
+                edges[EdgePosition.DOWN.getEdgeNumber()].setPartsRow(frontCol, 0);
+                edges[EdgePosition.BACK.getEdgeNumber()].setPartsRow(reverse(downCol), 2);
+                edges[EdgePosition.UP.getEdgeNumber()].setPartsRow(backCol, 0);
+                break;
+            case COUNTERCLOCKWISE:
+                edges[EdgePosition.FRONT.getEdgeNumber()].setPartsRow(downCol, 0);
+                edges[EdgePosition.DOWN.getEdgeNumber()].setPartsRow(reverse(backColRaw), 0);
+                edges[EdgePosition.BACK.getEdgeNumber()].setPartsRow(reverse(upCol), 2);
+                edges[EdgePosition.UP.getEdgeNumber()].setPartsRow(frontCol, 0);
+                break;
         }
 
-        CubeColor[][] parts = turn(direction , EdgePosition.LEFT) ;
-        edges[EdgePosition.LEFT.getEdgeNumber()].setParts(parts);;
-
+        edges[EdgePosition.LEFT.getEdgeNumber()].setParts(turn(direction, EdgePosition.LEFT));
     }
 
     @Override
     public void right(RotateDirection direction) {
+        // Копируем ДО изменений (столбец 2 для всех, кроме BACK — там столбец 0)
+        CubeColor[] upCol = Arrays.copyOf(edges[EdgePosition.UP.getEdgeNumber()].getPartsRow(2), 3);
+        CubeColor[] frontCol = Arrays.copyOf(edges[EdgePosition.FRONT.getEdgeNumber()].getPartsRow(2), 3);
+        CubeColor[] downCol = Arrays.copyOf(edges[EdgePosition.DOWN.getEdgeNumber()].getPartsRow(2), 3);
+        CubeColor[] backColRaw = edges[EdgePosition.BACK.getEdgeNumber()].getPartsRow(0); // Столбец 0 EdgePosition.BACK
+        CubeColor[] backCol = reverse(Arrays.copyOf(backColRaw, 3)); // Инвертируем из-за ориентации
 
-        CubeColor[] upColorEdge = Arrays.copyOf(edges[EdgePosition.UP.getEdgeNumber()].getPartsRow(2),edges[EdgePosition.UP.getEdgeNumber()].getPartsRow(2).length );   // red
-        CubeColor[] downColorEdge = Arrays.copyOf(edges[EdgePosition.DOWN.getEdgeNumber()].getPartsRow(2),edges[EdgePosition.DOWN.getEdgeNumber()].getPartsRow(2).length );   // red
-        CubeColor[] frontColorEdge = Arrays.copyOf(edges[EdgePosition.FRONT.getEdgeNumber()].getPartsRow(2),edges[EdgePosition.FRONT.getEdgeNumber()].getPartsRow(2).length );   // red
-        CubeColor[] backColorEdge = Arrays.copyOf(edges[EdgePosition.BACK.getEdgeNumber()].getPartsRow(2),edges[EdgePosition.BACK.getEdgeNumber()].getPartsRow(2).length );   // red
-
-        switch (direction) { // TODO : можно вынести
-            case COUNTERCLOCKWISE :
-                edges[ EdgePosition.UP.getEdgeNumber() ].setPartsRow(backColorEdge,2);
-                edges[ EdgePosition.BACK.getEdgeNumber() ].setPartsRow(downColorEdge,2);
-                edges[ EdgePosition.DOWN.getEdgeNumber() ].setPartsRow(frontColorEdge,2);
-                edges[ EdgePosition.FRONT.getEdgeNumber() ].setPartsRow(upColorEdge,2);
-                break ;
-
+        switch (direction) {
+            case COUNTERCLOCKWISE:
+                edges[EdgePosition.FRONT.getEdgeNumber()].setPartsRow(upCol, 2);
+                edges[EdgePosition.DOWN.getEdgeNumber()].setPartsRow(frontCol, 2);
+                edges[EdgePosition.BACK.getEdgeNumber()].setPartsRow(reverse(downCol), 0); // Инвертируем при записи
+                edges[EdgePosition.UP.getEdgeNumber()].setPartsRow(backCol, 2);
+                break;
             case CLOCKWISE:
-
-                edges[ EdgePosition.UP.getEdgeNumber() ].setPartsRow(frontColorEdge ,2);
-                edges[ EdgePosition.BACK.getEdgeNumber() ].setPartsRow(upColorEdge,2);
-                edges[ EdgePosition.DOWN.getEdgeNumber() ].setPartsRow(backColorEdge,2);
-                edges[ EdgePosition.FRONT.getEdgeNumber() ].setPartsRow(downColorEdge,2);
-                break ;
+                edges[EdgePosition.FRONT.getEdgeNumber()].setPartsRow(downCol, 2);
+                edges[EdgePosition.DOWN.getEdgeNumber()].setPartsRow(reverse(backColRaw), 2);
+                edges[EdgePosition.BACK.getEdgeNumber()].setPartsRow(reverse(upCol), 0);
+                edges[EdgePosition.UP.getEdgeNumber()].setPartsRow(frontCol, 2);
+                break;
         }
 
-        CubeColor[][] parts = turn(direction , EdgePosition.RIGHT) ;
-        edges[EdgePosition.RIGHT.getEdgeNumber()].setParts(parts);;
-
-
+        edges[EdgePosition.RIGHT.getEdgeNumber()].setParts(turn(direction, EdgePosition.RIGHT));
     }
 
     @Override
@@ -221,34 +211,30 @@ public class RubiksCube implements  Cube {
 
     @Override
     public void back(RotateDirection direction) {
+        // Сначала копируем смежные элементы!
+        CubeColor[] upEdge = Arrays.copyOf(edges[EdgePosition.UP.getEdgeNumber()].getPartsLine(0), 3);
+        CubeColor[] downEdge = Arrays.copyOf(edges[EdgePosition.DOWN.getEdgeNumber()].getPartsLine(2), 3);
+        CubeColor[] leftEdge = Arrays.copyOf(edges[EdgePosition.LEFT.getEdgeNumber()].getPartsRow(0), 3);
+        CubeColor[] rightEdge = Arrays.copyOf(edges[EdgePosition.RIGHT.getEdgeNumber()].getPartsRow(2), 3);
 
-        CubeColor[] upColorEdge = Arrays.copyOf(edges[EdgePosition.UP.getEdgeNumber()].getPartsLine(0),edges[EdgePosition.UP.getEdgeNumber()].getPartsLine(0).length );   // red
-        CubeColor[] downColorEdge = Arrays.copyOf(edges[EdgePosition.DOWN.getEdgeNumber()].getPartsLine(2),edges[EdgePosition.DOWN.getEdgeNumber()].getPartsLine(2).length );   // red
-        CubeColor[] leftColorEdge = Arrays.copyOf(edges[EdgePosition.LEFT.getEdgeNumber()].getPartsRow(0),edges[EdgePosition.LEFT.getEdgeNumber()].getPartsRow(0).length );   // red
-        CubeColor[] rightColorEdge = Arrays.copyOf(edges[EdgePosition.RIGHT.getEdgeNumber()].getPartsRow(2),edges[EdgePosition.RIGHT.getEdgeNumber()].getPartsRow(2).length );   // red
-
-        switch (direction) { // TODO : можно вынести
-            case CLOCKWISE :
-                edges[ EdgePosition.UP.getEdgeNumber() ].setPartsLine(rightColorEdge , 0 );
-                edges[ EdgePosition.LEFT.getEdgeNumber() ].setPartsRow(upColorEdge , 0 );
-                edges[ EdgePosition.DOWN.getEdgeNumber() ].setPartsLine(leftColorEdge , 2);
-                edges[ EdgePosition.RIGHT.getEdgeNumber() ].setPartsRow(downColorEdge , 2);
-                break ;
-
-
+        switch (direction) {
+            case CLOCKWISE:
+                edges[EdgePosition.UP.getEdgeNumber()].setPartsLine(reverse(rightEdge), 0);
+                edges[EdgePosition.LEFT.getEdgeNumber()].setPartsRow(reverse(upEdge), 0);
+                edges[EdgePosition.DOWN.getEdgeNumber()].setPartsLine(reverse(leftEdge), 2);
+                edges[EdgePosition.RIGHT.getEdgeNumber()].setPartsRow(reverse(downEdge), 2);
+                break;
             case COUNTERCLOCKWISE:
-                edges[ EdgePosition.UP.getEdgeNumber() ].setPartsLine(leftColorEdge , 0);
-                edges[ EdgePosition.LEFT.getEdgeNumber() ].setPartsRow(downColorEdge , 0);
-                edges[ EdgePosition.DOWN.getEdgeNumber() ].setPartsLine(rightColorEdge , 2);
-                edges[ EdgePosition.RIGHT.getEdgeNumber() ].setPartsRow(upColorEdge , 2);
-                break ;
-
+                edges[EdgePosition.UP.getEdgeNumber()].setPartsLine(reverse(leftEdge), 0);
+                edges[EdgePosition.LEFT.getEdgeNumber()].setPartsRow(reverse(downEdge), 0);
+                edges[EdgePosition.DOWN.getEdgeNumber()].setPartsLine(reverse(rightEdge), 2);
+                edges[EdgePosition.RIGHT.getEdgeNumber()].setPartsRow(reverse(upEdge), 2);
+                break;
         }
 
-        CubeColor[][] parts = turn(direction , EdgePosition.BACK) ;
-        edges[EdgePosition.BACK.getEdgeNumber()].setParts(parts);;
+        // Только теперь поворачиваем саму грань
+        edges[EdgePosition.BACK.getEdgeNumber()].setParts(turn(direction, EdgePosition.BACK));
     }
-
 
     public Edge[] getEdges() {
         return edges;
@@ -299,9 +285,9 @@ public class RubiksCube implements  Cube {
 //        rubiksCube.front(RotateDirection.CLOCKWISE);
 //
 //
-        rubiksCube.back(RotateDirection.COUNTERCLOCKWISE);
+//        rubiksCube.back(RotateDirection.COUNTERCLOCKWISE);
 //        rubiksCube.back(RotateDirection.CLOCKWISE);
-
+//
 
 
 
