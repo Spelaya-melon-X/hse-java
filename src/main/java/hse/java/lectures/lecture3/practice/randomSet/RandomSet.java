@@ -3,6 +3,8 @@ package hse.java.lectures.lecture3.practice.randomSet;
 import java.util.Objects;
 import java.util.Random;
 
+import static hse.java.lectures.lecture3.practice.randomSet.HashMap.getDefaultCapacity;
+
 
 public class RandomSet<T> {
     HashMap<T , Object> hashMap ;
@@ -28,10 +30,12 @@ public class RandomSet<T> {
     }
 
     public T getRandom() {
+        if (hashMap.empty()) {
+            throw new EmptySetException("попытка получить случайный элемент из пустого множества.");
+        }
         Random random = new Random();
-        int index = random.nextInt() % HashMap.getDefaultCapacity();
-        Node<T, Object> node = hashMap.getKeyByIndex(index);
-        return node.key;
+        return hashMap.get(random.nextInt(getDefaultCapacity() +1));
+
     }
 
 

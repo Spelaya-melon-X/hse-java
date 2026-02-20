@@ -16,6 +16,10 @@ public class HashMap<K ,V>{
         size = 0 ;
     }
 
+    public boolean empty() {
+        return length() == 0;
+    }
+
     Node<K,V> getKeyByIndex(int index) {
         return backets[index];
     }
@@ -23,6 +27,7 @@ public class HashMap<K ,V>{
     public int getIndex(K key) {
         return Math.abs(key.hashCode()) % backets.length;
     }
+
 
     public V put(K key , V value) {
         int index = getIndex(key);
@@ -72,6 +77,18 @@ public class HashMap<K ,V>{
             node = node.next;
         }
         return false;
+    }
+
+    public K get(int index) {
+//        int index = getIndex(key) ;
+        Node<K,V> node = backets[index] ;
+        while(node != null) {
+            if (node.key != null) {
+                return node.key;
+            }
+            node = node.next;
+        }
+        return null;
     }
 
     public int length() {
