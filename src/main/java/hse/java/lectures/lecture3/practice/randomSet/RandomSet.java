@@ -14,6 +14,7 @@ public class RandomSet<T> {
 
 
 
+
     public boolean insert(T value) {
         return hashMap.put(value , PRESENT) == null;
     }

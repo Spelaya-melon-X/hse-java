@@ -10,6 +10,7 @@ public class HashMap<K ,V>{
         return DEFAULT_CAPACITY;
     }
 
+
     public HashMap() {
         backets = new Node[DEFAULT_CAPACITY];
         size = 0 ;
