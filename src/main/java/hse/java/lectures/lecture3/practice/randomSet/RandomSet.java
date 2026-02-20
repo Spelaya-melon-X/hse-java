@@ -34,11 +34,7 @@ public class RandomSet<T> {
             throw new EmptySetException("попытка получить случайный элемент из пустого множества.");
         }
         Random random = new Random();
-        T result  = hashMap.get(random.nextInt(getDefaultCapacity() )) ;
-        while( result != null ) {
-            result = hashMap.get(random.nextInt(getDefaultCapacity() ));
-        }
-        return result;
+        return null ;
 
     }
 
