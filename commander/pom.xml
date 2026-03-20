@@ -13,8 +13,8 @@
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-        <maven.compiler.source>25</maven.compiler.source>
-        <maven.compiler.target>25</maven.compiler.target>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
         <javafx.version>21.0.6</javafx.version>
         <junit.version>5.12.1</junit.version>
         <maven.surefire.version>3.2.5</maven.surefire.version>
@@ -80,6 +80,7 @@
                 <artifactId>maven-surefire-plugin</artifactId>
                 <version>${maven.surefire.version}</version>
                 <configuration>
+                    <!--suppress UnresolvedMavenProperty -->
                     <groups>${groups:-}</groups>
                     <failIfNoTests>${failIfNoTests:-true}</failIfNoTests>
                 </configuration>

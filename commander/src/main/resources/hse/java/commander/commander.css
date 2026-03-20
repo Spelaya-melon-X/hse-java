@@ -1,0 +1,149 @@
+.root-wrap {
+    -fx-background-color: #0f1f0f;
+    -fx-padding: 12;
+    -fx-spacing: 10;
+}
+
+.panels-box {
+    -fx-spacing: 10;
+}
+
+.panel {
+    -fx-background-color: #0a170a;
+    -fx-border-color: #1e3a1e;
+    -fx-border-width: 1;
+    -fx-border-radius: 8;
+    -fx-background-radius: 8;
+    -fx-spacing: 0;
+}
+
+.panel:hover {
+    -fx-border-color: #2a5a2a;
+}
+
+.panel-active {
+    -fx-border-color: #639922;
+}
+
+.panel-header {
+    -fx-background-color: #152815;
+    -fx-text-fill: #4a9a4a;
+    -fx-padding: 6 12 6 12;
+    -fx-font-family: monospace;
+    -fx-font-size: 11px;
+    -fx-letter-spacing: 0.1em;
+    -fx-border-color: transparent transparent #1e3a1e transparent;
+    -fx-border-width: 1;
+    -fx-max-width: Infinity;
+}
+
+.file-list {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-padding: 0;
+}
+
+.file-list .list-cell {
+    -fx-background-color: transparent;
+    -fx-text-fill: #5ab85a;
+    -fx-font-family: monospace;
+    -fx-font-size: 12px;
+    -fx-padding: 6 12 6 14;
+    -fx-border-color: transparent transparent transparent transparent;
+    -fx-border-width: 0 0 0 2;
+    -fx-cursor: hand;
+}
+
+.file-list .list-cell:hover {
+    -fx-background-color: #152815;
+    -fx-text-fill: #8de08d;
+    -fx-border-color: transparent transparent transparent #3b6d11;
+    -fx-scale-x: 1.015;
+    -fx-scale-y: 1.015;
+    -fx-translate-x: 2;
+}
+
+.file-list .list-cell:selected {
+    -fx-background-color: #1a3a1a;
+    -fx-text-fill: #a0f0a0;
+    -fx-border-color: transparent transparent transparent #639922;
+}
+
+.file-list .list-cell:empty {
+    -fx-background-color: transparent;
+}
+
+.path-bar {
+    -fx-background-color: #0a170a;
+    -fx-text-fill: #2e5a2e;
+    -fx-font-family: monospace;
+    -fx-font-size: 10px;
+    -fx-padding: 4 12 4 12;
+    -fx-border-color: #1a321a transparent transparent transparent;
+    -fx-border-width: 1;
+    -fx-max-width: Infinity;
+}
+
+.actions-box {
+    -fx-padding: 0 2 0 2;
+}
+
+.btn {
+    -fx-background-color: #0f1f0f;
+    -fx-text-fill: #5ab85a;
+    -fx-border-color: #2a5a2a;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-font-family: monospace;
+    -fx-font-size: 12px;
+    -fx-padding: 8 0 8 0;
+    -fx-cursor: hand;
+}
+
+.btn:hover {
+    -fx-background-color: #1a3a1a;
+    -fx-text-fill: #a0f0a0;
+    -fx-border-color: #639922;
+    -fx-scale-x: 1.04;
+    -fx-scale-y: 1.04;
+}
+
+.btn:pressed {
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.97;
+}
+
+.btn-danger {
+    -fx-background-color: #0f1f0f;
+    -fx-text-fill: #8de0a0;
+    -fx-border-color: #1e4a2a;
+    -fx-border-width: 1;
+    -fx-border-radius: 6;
+    -fx-background-radius: 6;
+    -fx-font-family: monospace;
+    -fx-font-size: 12px;
+    -fx-padding: 8 0 8 0;
+    -fx-cursor: hand;
+}
+
+.btn-danger:hover {
+    -fx-background-color: #0f2a1a;
+    -fx-text-fill: #c0f0c0;
+    -fx-border-color: #3b7a3b;
+    -fx-scale-x: 1.04;
+    -fx-scale-y: 1.04;
+}
+
+.btn-danger:pressed {
+    -fx-scale-x: 0.97;
+    -fx-scale-y: 0.97;
+}
+
+.status-bar {
+    -fx-text-fill: #2e5a2e;
+    -fx-font-family: monospace;
+    -fx-font-size: 10px;
+    -fx-padding: 4 8 4 8;
+    -fx-alignment: center;
+}

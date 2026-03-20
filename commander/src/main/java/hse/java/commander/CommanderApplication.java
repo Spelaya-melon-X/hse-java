@@ -13,6 +13,11 @@ public class CommanderApplication extends Application {
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(CommanderApplication.class.getResource("commander-ui.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), 400, 400);
+        scene.getStylesheets().add(
+                CommanderApplication.class.getResource("commander.css").toExternalForm()
+        );
+
+
         MainController ctrl = fxmlLoader.getController();
         String home = System.getProperty("user.home");
         if (ctrl != null && home != null) {
