@@ -20,9 +20,9 @@
         </VBox>
     </HBox>
     <HBox styleClass="actions-box" spacing="8">
-        <Button fx:id="copy"   styleClass="btn"        text="copy"   HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
-        <Button fx:id="move"   styleClass="btn"        text="move"   HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
-        <Button fx:id="delete" styleClass="btn-danger" text="delete" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+        <Button fx:id="copy"   styleClass="btn"        text="Copy"   HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+        <Button fx:id="move"   styleClass="btn"        text="Move"   HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+        <Button fx:id="delete" styleClass="btn-danger" text="Delete" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
     </HBox>
     <Label fx:id="statusBar" styleClass="status-bar" text="выбери файл и действие" maxWidth="Infinity"/>
 </VBox>
