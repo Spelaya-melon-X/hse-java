@@ -13,6 +13,9 @@ public class StreamWriter implements Runnable {
     private final Runnable onTick;
     private volatile StreamingMonitor monitor;
 
+
+    private int writerIndex;
+
     public StreamWriter(int id, String message, PrintStream output, Runnable onTick) {
         this.message = message;
         this.id = id;
@@ -24,13 +27,26 @@ public class StreamWriter implements Runnable {
         this.monitor = monitor;
     }
 
-    @Override
-    public void run() {
-        // Writer threads are intentionally infinite for the task contract.
-        while (true) {
-            output.print(message);
-            onTick.run();
-        }
+
+    public void attachIndex(int index) {
+        this.writerIndex = index;
     }
 
+    @Override
+    public void run() {
+        while (true) {
+            try {
+                boolean shouldPrint = monitor.awaitTurn(writerIndex);
+                if (!shouldPrint) {
+                    return;
+                }
+                output.print(message);
+                onTick.run();
+                monitor.completeTick(writerIndex);
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+                return;
+            }
+        }
+    }
 }
